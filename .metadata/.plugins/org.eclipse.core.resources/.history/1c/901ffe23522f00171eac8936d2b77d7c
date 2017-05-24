@@ -1,5 +1,0 @@
-package com.analogyx.samples.mysql;
-
-public class MysqlTeanantAwareDataSource {
-
-}

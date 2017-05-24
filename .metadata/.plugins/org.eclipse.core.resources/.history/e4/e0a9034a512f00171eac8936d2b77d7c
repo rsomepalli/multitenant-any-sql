@@ -1,7 +1,0 @@
-package org.moveon.multitenant.sql;
-
-@FunctionalInterface
-public interface TenantDBInstanceProvider {
-
-	String getDBInstanceKey(int tenantId);
-}

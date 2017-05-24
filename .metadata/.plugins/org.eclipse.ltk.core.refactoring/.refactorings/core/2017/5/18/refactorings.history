@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;org.moveon.multitenant.sql.TenantDBInstanceProvider&apos; to &apos;TenantDBInstanceKeyProvider&apos;&#x0A;- Original project: &apos;core&apos;&#x0A;- Original element: &apos;org.moveon.multitenant.sql.TenantDBInstanceProvider&apos;&#x0A;- Renamed element: &apos;org.moveon.multitenant.sql.TenantDBInstanceKeyProvider&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;TenantDBInstanceProvider&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java&lt;org.moveon.multitenant.sql{TenantDBInstanceProvider.java[TenantDBInstanceProvider" matchStrategy="1" name="TenantDBInstanceKeyProvider" qualified="false" references="true" similarDeclarations="false" stamp="1493741183957" textual="false" version="1.0"/>
-</session>

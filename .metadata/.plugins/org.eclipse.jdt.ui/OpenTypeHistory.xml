@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-<typeInfo handle="=schema/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_74.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;javax.sql(DataSource.class[DataSource" modifiers="1537" timestamp="1454111452000"/>
-<typeInfo handle="=schema/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_74.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;javax.sql(ConnectionPoolDataSource.class[ConnectionPoolDataSource" modifiers="1537" timestamp="1454111452000"/>
-<typeInfo handle="=mysql/\/Users\/ravi.somepalli\/.m2\/repository\/mysql\/mysql-connector-java\/5.1.6\/mysql-connector-java-5.1.6.jar&lt;com.mysql.jdbc.jdbc2.optional(MysqlDataSourceFactory.class[MysqlDataSourceFactory" modifiers="33" timestamp="1489711628000"/>
-<typeInfo handle="=mysql/\/Users\/ravi.somepalli\/.m2\/repository\/mysql\/mysql-connector-java\/5.1.6\/mysql-connector-java-5.1.6.jar&lt;com.mysql.jdbc.jdbc2.optional(MysqlDataSource.class[MysqlDataSource" modifiers="33" timestamp="1489711628000"/>
-<typeInfo handle="=core/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_74.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;java.util.stream(Stream.class[Stream" modifiers="1537" timestamp="1454111452000"/>
-</typeInfoHistroy>

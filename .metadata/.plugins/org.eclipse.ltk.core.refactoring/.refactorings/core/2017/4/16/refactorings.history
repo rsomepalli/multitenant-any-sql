@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete element from project &apos;core&apos;&#x0A;- Original project: &apos;core&apos;&#x0A;- Original element: &apos;org.moveon.multitenant.sql.impl.TestContextAwareImpl.java&apos;" description="Delete element" element1="/src\/main\/java&lt;org.moveon.multitenant.sql.impl{TestContextAwareImpl.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1492824276076" subPackages="false" version="1.0"/>
-</session>
