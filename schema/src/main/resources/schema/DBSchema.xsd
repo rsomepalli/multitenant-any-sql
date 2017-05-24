@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:agyx="http://www.analogyx.com/schemer/domain"
+	targetNamespace="http://www.analogyx.com/schemer/domain"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="1.0"
+	elementFormDefault="qualified">
+
+	<xs:element name="database">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="table" type="agyx:tabletype" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="tabletype">
+		<xs:sequence>
+            <xs:element name="column" type="agyx:columntype" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="index" type="agyx:indextype" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="row" type="agyx:rowtype" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="generateView" type="xs:boolean" use="optional" default="true" />
+		<xs:attribute name="originalname" use="optional" />
+		<xs:attribute name="name" use="required" />
+		<xs:attribute name="historyMaintained" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="historyTableName" type="xs:string" use="optional"/>
+		<xs:attribute name="tenantScoped"  type="xs:boolean" use="optional" default="true" />
+		<xs:attribute name="addTimeStampColumns"  type="xs:boolean" use="optional" default="true" />
+	</xs:complexType>
+
+	<xs:complexType name="columntype">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="originalname" type="xs:string" use="optional" />
+		<xs:attribute name="type" type="xs:string" use="required" />
+		<xs:attribute name="scale" type="xs:int" use="optional" default="1"/>
+		<xs:attribute name="nullable" type="xs:boolean" default="false" />
+		<xs:attribute name="default" type="xs:anySimpleType" use="optional" />
+		<xs:attribute name="defaultExpression" type="xs:boolean" use="optional" default="false" />
+        <xs:attribute name="minValue" type="xs:string" use="optional" />
+        <xs:attribute name="maxValue" type="xs:string" use="optional" />
+        <xs:attribute name="regex" type="xs:string" use="optional" />
+        <xs:attribute name="sequence" type="xs:boolean" use="optional" />
+        <xs:attribute name="sequence_name" type="xs:string" use="optional" />
+        <xs:attribute name="includeInView" type="xs:boolean" use="optional" default="true"/>
+	</xs:complexType>
+
+	<xs:complexType name="indextype">
+		<xs:sequence>
+			<xs:element name="on" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="primary" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="prikeyname" type="xs:string" use="optional"/>
+		<xs:attribute name="indexname" type="xs:string" use="optional"/>
+		<xs:attribute name="unique" type="xs:boolean" use="optional" default="false"/>
+	</xs:complexType>
+
+	<xs:complexType name="rowtype">
+		<xs:sequence>
+			<xs:element name="column" type="agyx:rowdatatype" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+        <xs:attribute name="cat" type="xs:string" use="optional"/>
+        <xs:attribute name="file" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="rowdatatype">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+</xs:schema>

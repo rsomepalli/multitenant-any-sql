@@ -1,0 +1,8 @@
+Group statements , Create tables, Create Views, Create triggers, Initial Data
+
+Add Feature to Clean up- 
+DROP TABLE, VIEW, and delete initial data
+feature for upgrade script.
+feature to extends tables from abstract tables
+Generate JooqCode etc.
+

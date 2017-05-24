@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<database xmlns="http://www.analogyx.com/schemer/domain">
+
+	<table name="product_type">
+		<column name="id" nullable="false" scale="1" type="int"  />
+		<column name="variant_count" nullable="false" type="int" />
+		<column name="variant1_name" nullable="true" scale="256" type="string" />
+		<column name="variant2_name" nullable="true" scale="256" type="string" />
+		<column name="variant3_name" nullable="true" scale="256" type="string" />
+		<column name="variant4_name" nullable="true" scale="256" type="string" />
+		<column name="variant5_name" nullable="true" scale="256" type="string" />
+		<index primary="true">
+			<on>id</on>
+		</index>
+	</table>
+
+	<table name="product_parent">
+		<column name="id" nullable="false" scale="1" type="int" />
+		<column name="product_type" nullable="false" type="int"></column>
+		<column name="name" nullable="false" scale="100" type="string" />
+		<column name="description" nullable="true" scale="1000" type="string" />
+		<column name="parent_sku" nullable="true" scale="256" type="string" />
+		<column name="image_url" nullable="true" scale="256" type="string" />
+		<column name="has_variants" nullable="true" scale="256" type="string" />
+		<column name="category1" nullable="true" scale="100" type="string" />
+		<column name="category2" nullable="true" scale="100" type="string" />
+		<column name="category3" nullable="true" scale="100" type="string" />
+		<column name="category4" nullable="true" scale="100" type="string" />
+		<column name="category5" nullable="true" scale="100" type="string" />
+		<index primary="true">
+			<on>id</on>
+		</index>
+	</table>
+
+	<table name="product">
+		<column name="id" nullable="false" scale="1" type="int" />
+		<column name="parent_id" nullable="false" scale="1" type="int" />
+		<column name="sku" nullable="true" scale="100" type="string" />
+		<column name="upc" nullable="false" scale="1" type="int" />
+		<column name="price" nullable="false" scale="1" type="float" />
+		<column name="variant1_name" nullable="true" scale="100" type="string" />
+		<column name="variant1_value" nullable="true" scale="100" type="string" />
+		<column name="variant2_name" nullable="true" scale="100" type="string" />
+		<column name="variant2_value" nullable="true" scale="100" type="string" />
+		<column name="variant3_name" nullable="true" scale="100" type="string" />
+		<column name="variant3_value" nullable="true" scale="100" type="string" />
+		<column name="variant4_name" nullable="true" scale="100" type="string" />
+		<column name="variant4_value" nullable="true" scale="100" type="string" />
+		<column name="variant5_name" nullable="true" scale="100" type="string" />
+		<column name="variant5_value" nullable="true" scale="100" type="string" />
+		<index primary="true">
+			<on>id</on>
+		</index>
+		<index unique="true">
+			<on>upc</on>
+		</index>
+	</table>
+	
+	<table name="product_inventory">
+		<column name="id" nullable="false" scale="1" type="int" />
+		<column name="inventory_available" nullable="false" scale="1" type="int" />
+		<index primary="true">
+			<on>id</on>
+		</index>
+	</table>
+	<table name="product_sourcing_order">
+		<column name="id" nullable="false" scale="1" type="int" />
+		<column name="vendor" type="string" scale="100" nullable="true" />
+		<column name="ordered_date" nullable="true" type="timestamp" />
+		<column name="shipped_date" nullable="true" type="timestamp" />
+		<column name="planned_inventory_available" nullable="true" type="timestamp" />
+		<column name="received_date" nullable="true" type="timestamp" />
+		<column name="inventory_updated" nullable="false" type="boolean" default="false" />
+		<index primary="true">
+			<on>id</on>
+		</index>
+	</table>
+
+	<table name="product_supply_pipeline">
+		<column name="order_id" nullable="false" scale="1" type="int" />
+		<column name="product_id" nullable="false" scale="1" type="int" />
+		<column name="quantity" nullable="false" scale="1" type="int" />
+		<index primary="true">
+			<on>order_id</on>
+			<on>product_id</on>
+		</index>
+	</table>
+
+	<table name="retailer">
+		<column name="id" nullable="false" scale="1" type="int" />
+		<column name="name" nullable="false" scale="100" type="string" />
+		<column name="retailerTimeZone" nullable="false" scale="10" type="string" />
+		<index primary="true">
+			<on>id</on>
+		</index>
+	</table>
+
+	<!-- This table is never updated it should be based on event sourcing principle	 -->
+	<table name="sale_event">
+		<column name="id" nullable="false" scale="1" type="int" />
+		<column name="merchant_id" nullable="false" scale="1" type="int" />
+		<column name="sale_start_date" nullable="false" type="timestamp" />
+		<column name="sale_end_date" nullable="false" type="timestamp" /> 
+		<column name="version" type="int" nullable="false"  scale="1"/>
+		<!-- NEW, SENT, ACCEPTED, FINAL -->
+		<column name="event_status"  nullable="false" type="string"/>
+		<index primary="true">
+			<on>id</on>
+			<on>version</on>
+		</index>
+	</table>
+	
+	<table name="sale_event_details">
+		<column name="sale_id" nullable="false" scale="1" type="int" />
+		<column name="version" type="int" nullable="false" />
+		<column name="product_id" type="int" nullable="false" />
+		<column name="offered_count" type="int" nullable="false" />
+		<column name="offered_price" type="float" nullable="false" />
+		<column name="retail_price" type="float" nullable="false" />
+		<index primary="true">
+			<on>sale_id</on>
+			<on>version</on>
+		</index>
+	</table>
+	
+	<table name="daily_sale_details">
+		<column name="sale_id" nullable="false" scale="1" type="int" />
+		<column name="product_id" type="int" nullable="false" />
+		<column name="sale_count" type="int" nullable="false" />
+		<column name="sale_date" type="date" nullable="false" />
+		<index primary="true">
+			<on>sale_id</on>
+			<on>product_id</on>
+			<on>sale_date</on>
+		</index>
+	</table>
+
+	<table name="user">
+		<column name="user_id" nullable="false" type="string" scale="100"/>
+		<column name="password_hash" nullable="false" type="string" scale="256"/>
+		<column name="roles" nullable="false" type="string" scale="256" />
+		<index primary="true">
+			<on>user_id</on>
+		</index>
+	</table>
+</database>
+

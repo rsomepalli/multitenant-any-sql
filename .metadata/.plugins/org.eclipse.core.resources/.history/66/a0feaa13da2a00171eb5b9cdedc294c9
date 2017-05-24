@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<database xmlns="http://www.analogyx.com/schemer/domain">
+<table name="user">
+		<column name="user_id" nullable="false" type="string" scale="100"/>
+		<column name="password_hash" nullable="false" type="string" scale="256"/>
+		<column name="roles" nullable="false" type="string" scale="256" />
+		<index primary="true">
+			<on>user_id</on>
+		</index>
+	</table>
+</database>
