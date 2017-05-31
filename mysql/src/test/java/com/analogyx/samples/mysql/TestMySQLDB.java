@@ -46,7 +46,7 @@ public class TestMySQLDB {
 	}
 
 	private static TenantAwareDataSource buildTenantDataSource(TenantContext tenantContext) {
-		MysqlTeanantAwareDataSource tds = new MysqlTeanantAwareDataSource();
+		MysqlTenantAwareDataSource tds = new MysqlTenantAwareDataSource();
 		Map<String, DataSource> dbInstances = new HashMap<>();
 		MysqlDataSource ds1 = new MysqlDataSource();
 		ds1.setUrl("jdbc:mysql://localhost:3306/mt1");
