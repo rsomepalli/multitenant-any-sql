@@ -1,6 +1,6 @@
 MySQL approach to achieve multitenancy is to add a column to every table that hold tenant data and create a view on the table that gets the tenant from a session variable that is set by the MySqlSessionVariableTenantSessionCallback.
  for eg. In a web application the tenantId could should be set after validating the user credentials and knowing the tenant of the user.
- {code}
+ ```
  
  CREATE TABLE tbl_person ( tenant int NULL,  id int(100) NOT NULL,  name varchar(256) NOT NULL,  age number(256) NOT NULL,  last_updated timestamp DEFAULT now() NOT NULL,  date_created timestamp DEFAULT now() NOT NULL ) ;
 CREATE TRIGGER before_insert_tbl_person BEFORE INSERT ON tbl_person FOR EACH ROW SET new.tenant = gettenant();
@@ -11,8 +11,9 @@ CREATE OR REPLACE VIEW person ( id,  name,  age,  last_updated,  date_created ) 
  
  You could use the schema mysql generation tool to generate the table, 
  //TODO : Link to schema readme.md
- 
+ ```
  sample schema xml looks like below, produces the ddl above.
+ ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <database xmlns="http://www.analogyx.com/schemer/domain">
 	<table name="person">
@@ -24,22 +25,22 @@ CREATE OR REPLACE VIEW person ( id,  name,  age,  last_updated,  date_created ) 
 		</index>
 	</table>
 </database>
-	
- {code}
+```	
+
  
  sql function to get the tenant from session variable is 
- {code}
+ ```
  	CREATE FUNCTION gettenant() RETURNS INT 
 	BEGIN
 		RETURN @tenant;
 	END
- {code}
+ ```
  
  Once the tables and  are created, you can test it at the db level by 
- 
+ ```
  set @tenant=1
  insert into person(id, name, age) values(1, 'test', 24);
- 
+ ```
  select * from tbl_person; // should have the tenant column populated with 1.
  When you are writing application level code you would typically never use tbl_person, that way tenant related code is only in the layer that validates the user and set the tenant.
  
@@ -56,14 +57,14 @@ CREATE OR REPLACE VIEW person ( id,  name,  age,  last_updated,  date_created ) 
 		tds.setTenantDBInstanceProvider(tenantId->"default"); // always return the same datasource irrespective of the tenant.
 	 -- Make sure the TenantContext instance that you set into TenantAwareDataSource is shared with the code that sets the tenant at user authorization time/entry time.
 	 //Code at entry while validating user auth
-	 	tenantContext.set(1);
+	 ```	tenantContext.set(1);
 		//Code executing in each thread.
 		some where in the code at entry during user authentication
 		Connection conn = tds.getConnection();
 		conn.createStatement().execute("insert into person(id, name, age) values(1),'testname',24)");
 		conn.commit();
 		conn.close();
-		
+	```	
   		
   - 
   
