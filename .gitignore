@@ -6,3 +6,4 @@
 /**/bin
 gradle
 .metadata
+.recommenders
