@@ -1,6 +1,8 @@
 package com.analogyx.schemer.instance;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +63,13 @@ public class DbScriptGenerator {
 			DbScriptGenerator scriptGen = new DbScriptGenerator();
 			scriptGen.sqlGen =  new MySQLGenerator();
 			Optional<SQLScriptSet> generateSQL = scriptGen.generateSQL(fileName);
-			generateSQL.ifPresent(script -> script.print(System.out));
+			PrintStream p = System.out;
+			if(args.length>1){
+				String outputFileName = args[1];
+				p = new PrintStream(new FileOutputStream(outputFileName));
+			}
+			final PrintStream p1=p;
+			generateSQL.ifPresent(script -> script.print(p1));
 		} else {
 			System.out.println("Usage : java com.analogyx.schemer.instance.DbScriptGenerator path/to/SchemaBase.xml");
 		}
