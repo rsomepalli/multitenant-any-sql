@@ -1,7 +1,7 @@
 apply plugin: 'com.github.jacobono.jaxb'
 
 jaxb { 
-  xsdDir = "src/main/resources/schema"
+  xsdDir = "schema/src/main/resources/schema"
   xjc {
     destinationDir="src/main/generated"
   }
@@ -11,10 +11,10 @@ sourceSets {
     main {
         java {
             srcDir 'src/main/java'
-	    srcDir 'src/main/generated'
+	    	srcDir 'src/main/generated'
         }
         resources {
-            srcDir 'src/resources'
+            srcDir 'src/main/resources'
         }
     }
 }

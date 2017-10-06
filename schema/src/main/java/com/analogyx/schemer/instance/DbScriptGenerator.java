@@ -29,13 +29,18 @@ public class DbScriptGenerator {
 		Database db = (Database) u.unmarshal(schemaFile);
 		if (db != null) {
 			List<Tabletype> inputTables = db.getTable();
+			// generate table meta data table and insert metadata into it.
+			// like where the table has version, whether it has history/audit etc..
+			
 			SQLScriptSet scripts = new SQLScriptSet();
 			Collection<Tabletype> generatedTables = 
 					Stream.of(new HistoryTableMapper())
 					.flatMap(mapper -> inputTables.stream().flatMap(table -> mapper.map(table).stream()))
 					.collect(Collectors.toList());
 
-			Stream.of(new TimeStampColumnsTableMutator(), new TenantColumnsTableMutator())
+			Stream.of(new TimeStampColumnsTableMutator(), 
+					new VersionColumnTableMutator(),
+					new TenantColumnsTableMutator())
 					.forEach(mutator -> generatedTables.forEach(table -> mutator.mutate(table)));
 			generatedTables.forEach(tableType -> {
 				scripts.addDropStatements(sqlGen.generateDropTables(tableType));

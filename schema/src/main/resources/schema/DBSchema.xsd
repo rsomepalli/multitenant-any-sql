@@ -27,6 +27,7 @@
 		<xs:attribute name="historyTableName" type="xs:string" use="optional"/>
 		<xs:attribute name="tenantScoped"  type="xs:boolean" use="optional" default="true" />
 		<xs:attribute name="addTimeStampColumns"  type="xs:boolean" use="optional" default="true" />
+		<xs:attribute name="versionMaintained"  type="xs:boolean" use="optional" default="true" />
 	</xs:complexType>
 
 	<xs:complexType name="columntype">
