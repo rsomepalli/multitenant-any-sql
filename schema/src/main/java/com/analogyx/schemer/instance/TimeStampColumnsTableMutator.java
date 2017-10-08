@@ -9,7 +9,7 @@ public class TimeStampColumnsTableMutator implements TableMutator {
 
 
 	public void mutate(Tabletype tableDef) {
-		if(tableDef.isHistoryMaintained()){
+		if(tableDef.isAddTimeStampColumns()){
 			addTimeStampColumn(tableDef, "last_updated");
 			addTimeStampColumn(tableDef, "date_created");
 		}
