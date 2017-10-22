@@ -1,4 +1,4 @@
-package com.analogyx.samples.mysql;
+package com.lakumbra.multitenant.samples.mysql;
 
 import java.sql.Connection;
 import java.util.HashMap;
@@ -6,9 +6,9 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.moveon.multitenant.sql.TenantAwareDataSource;
-import org.moveon.multitenant.sql.TenantContext;
-
+import com.lakumbra.multitenant.mysql.MysqlTenantAwareDataSource;
+import com.lakumbra.multitenant.sql.TenantAwareDataSource;
+import com.lakumbra.multitenant.sql.TenantContext;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class TestMySQLDB {

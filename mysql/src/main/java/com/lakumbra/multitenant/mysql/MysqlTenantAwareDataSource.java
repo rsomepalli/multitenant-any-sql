@@ -1,6 +1,6 @@
-package com.analogyx.samples.mysql;
+package com.lakumbra.multitenant.mysql;
 
-import org.moveon.multitenant.sql.TenantAwareDataSource;
+import com.lakumbra.multitenant.sql.TenantAwareDataSource;
 
 public class MysqlTenantAwareDataSource extends TenantAwareDataSource{
 

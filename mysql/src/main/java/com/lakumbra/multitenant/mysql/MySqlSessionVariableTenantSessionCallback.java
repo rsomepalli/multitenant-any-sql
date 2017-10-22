@@ -1,9 +1,9 @@
-package com.analogyx.samples.mysql;
+package com.lakumbra.multitenant.mysql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.moveon.multitenant.sql.TenantSessionCallback;
+import com.lakumbra.multitenant.sql.TenantSessionCallback;
 
 public class MySqlSessionVariableTenantSessionCallback implements TenantSessionCallback{
 

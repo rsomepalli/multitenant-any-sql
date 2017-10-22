@@ -1,4 +1,4 @@
-package com.analogyx.samples.mysql;
+package com.lakumbra.multitenant.mysql;
 
 import javax.sql.DataSource;
 

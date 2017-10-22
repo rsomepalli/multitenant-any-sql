@@ -5,4 +5,9 @@ DROP TABLE, VIEW, and delete initial data
 feature for upgrade script.
 feature to extends tables from abstract tables
 Generate JooqCode etc.
+define relations between objects, like an ORM 
+
+Add data(like relation objects, history maintained tables etc.) to metadata tables so it can be used at run time, like whether history is maintained etc.
+
+
 

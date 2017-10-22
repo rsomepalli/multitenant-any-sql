@@ -1,4 +1,4 @@
-package org.moveon.multitenant.sql;
+package com.lakumbra.multitenant.sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
