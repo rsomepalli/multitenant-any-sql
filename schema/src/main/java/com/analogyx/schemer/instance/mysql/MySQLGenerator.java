@@ -26,7 +26,7 @@ public class MySQLGenerator implements SQLGenerator {
 		if (tabletype.isTenantScoped()) {
 			sqlStatements.add(generateTenantColumnTrigger(tabletype));
 		}
-		sqlStatements.add(generateUpdateColumnTrigger(tabletype));
+		//sqlStatements.add(generateUpdateColumnTrigger(tabletype));
 		
 		for (Indextype it : tabletype.getIndex()) {
 			String tableName = getTableName(tabletype);
@@ -86,7 +86,7 @@ public class MySQLGenerator implements SQLGenerator {
 
 	private String generateUpdateColumnTrigger(Tabletype tabletype) {
 		String triggerSQL = "CREATE TRIGGER before_update_" + getTableName(tabletype) + " BEFORE UPDATE ON "
-				+ getTableName(tabletype) + " FOR EACH ROW SET new.last_updated = now()";
+				+ getTableName(tabletype) + " FOR EACH ROW SET new.last_updated = now() ";
 		return triggerSQL;
 	}
 	

@@ -17,7 +17,7 @@ public interface TypesConverter {
 	public String schemaNullToNative(Columntype ct);
 	
 	/**
-	 * Take a native column type definition, and create a generic Columntype view of it, usefull for comparing the view
+	 * Take a native column type definition, and create a generic Columntype view of it, useful for comparing the view
 	 * with the schema.
 	 * @param table
 	 * @param column

@@ -14,6 +14,8 @@ public class MySQLTypesConverter extends GenericTypesConverter {
             return "timestamp";
         else if (columnType.getType().equals("binary"))
             return "image";
+        else if (columnType.getType().equals("boolean"))
+            return "tinyint";
         else
             return super.schemaTypeToNative(columnType);
     }
