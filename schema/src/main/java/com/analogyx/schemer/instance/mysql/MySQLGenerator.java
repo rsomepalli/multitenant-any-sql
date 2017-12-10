@@ -199,9 +199,9 @@ public class MySQLGenerator implements SQLGenerator {
 	public List<String> generateDropTables(Tabletype tabletype){
 		List<String> dropStmts = new ArrayList<>();
 		if(tabletype.isGenerateView()){
-			dropStmts.add("drop view " + tabletype.getName());
+			dropStmts.add("drop view if exists " + tabletype.getName());
 		}
-		dropStmts.add("drop table " + getTableName(tabletype));
+		dropStmts.add("drop table if exists " + getTableName(tabletype));
 		return dropStmts;
 	}
 }
