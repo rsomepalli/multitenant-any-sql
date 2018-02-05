@@ -140,7 +140,7 @@ public class MySQLGenerator implements SQLGenerator {
 
 	protected String generateCreateIndex(String tableName, Indextype indexType) {
 		String indexName = getIndexName("idx_", indexType);
-		String stmt = "CREATE NONCLUSTERED INDEX " + indexName + " ON " + tableName + " ( "
+		String stmt = "CREATE INDEX " + indexName + " ON " + tableName + " ( "
 				+ toCommaSeparatedList(indexType.getOn()) + " )";
 		return stmt;
 	}

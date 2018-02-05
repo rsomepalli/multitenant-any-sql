@@ -3,6 +3,7 @@ package com.analogyx.schemer.instance;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,11 @@ public class DbScriptGenerator {
 	private final String JAXB_PATH = "com.analogyx.schemer.domain";
 	private SQLGenerator sqlGen;
 	
+	public DbScriptGenerator(SQLGenerator sqlGen) {
+		super();
+		this.sqlGen = sqlGen;
+	}
+
 	public Optional<SQLScriptSet> generateSQL(String filename) throws Exception {
 		javax.xml.bind.Unmarshaller u = JAXBContext.newInstance(JAXB_PATH).createUnmarshaller();
 		File schemaFile = new SchemerFileLoader().findResourceAsFile(filename);
@@ -31,27 +37,50 @@ public class DbScriptGenerator {
 			List<Tabletype> inputTables = db.getTable();
 			// generate table meta data table and insert metadata into it.
 			// like where the table has version, whether it has history/audit etc..
-			
-			SQLScriptSet scripts = new SQLScriptSet();
-			Collection<Tabletype> generatedTables = 
-					Stream.of(new HistoryTableMapper())
-					.flatMap(mapper -> inputTables.stream().flatMap(table -> mapper.map(table).stream()))
-					.collect(Collectors.toList());
-
-			Stream.of(new TimeStampColumnsTableMutator(), 
-					new VersionColumnTableMutator(),
-					new TenantColumnsTableMutator())
-					.forEach(mutator -> generatedTables.forEach(table -> mutator.mutate(table)));
-			generatedTables.forEach(tableType -> {
-				scripts.addDropStatements(sqlGen.generateDropTables(tableType));
-				scripts.addAllTables(sqlGen.generateCreateTable(tableType));
-				scripts.addAllView(sqlGen.generateCreateView(tableType));
-				scripts.addData(sqlGen.generateSeqInitSQL(tableType));
-			});
-			return Optional.of(scripts);
+			return Optional.of(geneateScripts(inputTables));
 		}else{
 			return Optional.empty();
 		}
+	}
+	
+	public Optional<SQLScriptSet> generateSQL(String...files) throws Exception {
+		List<Tabletype> tables = new ArrayList<Tabletype>();
+		for(String file: files){
+			javax.xml.bind.Unmarshaller u = JAXBContext.newInstance(JAXB_PATH).createUnmarshaller();
+			File schemaFile = new SchemerFileLoader().findResourceAsFile(file);
+			u.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
+			Database db = (Database) u.unmarshal(schemaFile);
+			if (db != null) {
+				List<Tabletype> inputTables = db.getTable();
+				tables.addAll(inputTables);
+			}
+		}
+		
+		if(!tables.isEmpty()){
+			return Optional.of(geneateScripts(tables));
+		}else{
+			return Optional.empty();
+		}
+	}
+
+	private SQLScriptSet geneateScripts(List<Tabletype> inputTables) {
+		SQLScriptSet scripts = new SQLScriptSet();
+		Collection<Tabletype> generatedTables = 
+				Stream.of(new HistoryTableMapper())
+				.flatMap(mapper -> inputTables.stream().flatMap(table -> mapper.map(table).stream()))
+				.collect(Collectors.toList());
+
+		Stream.of(new TimeStampColumnsTableMutator(), 
+				new VersionColumnTableMutator(),
+				new TenantColumnsTableMutator())
+				.forEach(mutator -> generatedTables.forEach(table -> mutator.mutate(table)));
+		generatedTables.forEach(tableType -> {
+			scripts.addDropStatements(sqlGen.generateDropTables(tableType));
+			scripts.addAllTables(sqlGen.generateCreateTable(tableType));
+			scripts.addAllView(sqlGen.generateCreateView(tableType));
+			scripts.addData(sqlGen.generateSeqInitSQL(tableType));
+		});
+		return scripts;
 	}
 
 	public List<Tabletype> generateTables(List<Tabletype> inputTables, List<TableMapper> tableHandlers) {
@@ -62,11 +91,9 @@ public class DbScriptGenerator {
 	}
 
 	public static void main(String[] args) throws Exception {
-
 		if (args !=null && args.length!=0) {
 			String fileName = args[0];
-			DbScriptGenerator scriptGen = new DbScriptGenerator();
-			scriptGen.sqlGen =  new MySQLGenerator();
+			DbScriptGenerator scriptGen = new DbScriptGenerator(new MySQLGenerator());
 			Optional<SQLScriptSet> generateSQL = scriptGen.generateSQL(fileName);
 			PrintStream p = System.out;
 			if(args.length>1){
@@ -78,6 +105,5 @@ public class DbScriptGenerator {
 		} else {
 			System.out.println("Usage : java com.analogyx.schemer.instance.DbScriptGenerator path/to/SchemaBase.xml");
 		}
-
 	}
 }
