@@ -52,7 +52,9 @@ public class MySQLGenerator implements SQLGenerator {
 
 	private String generateTable(Tabletype tabletype) {
 		HashMap<String, Columntype> columnNameToColumnType = new HashMap<>();
+		
 		StringBuffer createSQL = new StringBuffer("CREATE TABLE " + getTableName(tabletype) + " (");
+		System.out.println(createSQL.toString());
 		int i = 0;
 		for (Columntype ct : tabletype.getColumn()) {
 			if (i != 0) {
@@ -60,7 +62,7 @@ public class MySQLGenerator implements SQLGenerator {
 			}
 			i += 1;
 			columnNameToColumnType.put(ct.getName(), ct);
-			createSQL.append(" " + ct.getName());
+			createSQL.append(" `" + ct.getName() + "`");
 			createSQL.append(" " + convertor.schemaTypeToNative(ct));
 			createSQL.append(convertor.schemaScaleToNative(ct));
 			if (ct.getDefault() != null && ct.getDefault().length() > 0){
@@ -101,7 +103,7 @@ public class MySQLGenerator implements SQLGenerator {
 						viewSQL.append(", ");
 					}
 					i += 1;
-					viewSQL.append(" " + ct.getName());
+					viewSQL.append(" `" + ct.getName()+ "`");
 				}
 			}
 			String tableNamePrefix = "tbl_" + tabletype.getName() + ".";
@@ -113,7 +115,7 @@ public class MySQLGenerator implements SQLGenerator {
 						viewSQL.append(", ");
 					}
 					i += 1;
-					viewSQL.append(" " + tableNamePrefix + ct.getName());
+					viewSQL.append(" " + tableNamePrefix + "`" +  ct.getName() + "`");
 				}
 			}
 			viewSQL.append(" from " + getTableName(tabletype) + (tabletype.isTenantScoped()? " where (" + tableNamePrefix + "tenant = gettenant())":""));

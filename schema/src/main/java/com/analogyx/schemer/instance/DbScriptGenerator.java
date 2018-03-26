@@ -63,7 +63,7 @@ public class DbScriptGenerator {
 		}
 	}
 
-	private SQLScriptSet geneateScripts(List<Tabletype> inputTables) {
+	public SQLScriptSet geneateScripts(List<Tabletype> inputTables) {
 		SQLScriptSet scripts = new SQLScriptSet();
 		Collection<Tabletype> generatedTables = 
 				Stream.of(new HistoryTableMapper())
