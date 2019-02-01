@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_main.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_test.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/multitenant-anysql.iml" filepath="$PROJECT_DIR$/multitenant-anysql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mysql/mysql.iml" filepath="$PROJECT_DIR$/.idea/modules/mysql/mysql.iml" group="mysql" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mysql/mysql_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mysql/mysql_main.iml" group="mysql" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mysql/mysql_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mysql/mysql_test.iml" group="mysql" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/schema/schema.iml" filepath="$PROJECT_DIR$/.idea/modules/schema/schema.iml" group="schema" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/schema/schema_main.iml" filepath="$PROJECT_DIR$/.idea/modules/schema/schema_main.iml" group="schema" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/schema/schema_test.iml" filepath="$PROJECT_DIR$/.idea/modules/schema/schema_test.iml" group="schema" />
+    </modules>
+  </component>
+</project>

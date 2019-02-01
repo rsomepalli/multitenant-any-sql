@@ -37,7 +37,7 @@ public class DbScriptGenerator {
 			List<Tabletype> inputTables = db.getTable();
 			// generate table meta data table and insert metadata into it.
 			// like where the table has version, whether it has history/audit etc..
-			return Optional.of(geneateScripts(inputTables));
+			return Optional.of(generateScripts(inputTables));
 		}else{
 			return Optional.empty();
 		}
@@ -57,28 +57,33 @@ public class DbScriptGenerator {
 		}
 		
 		if(!tables.isEmpty()){
-			return Optional.of(geneateScripts(tables));
+			return Optional.of(generateScripts(tables));
 		}else{
 			return Optional.empty();
 		}
 	}
-
-	public SQLScriptSet geneateScripts(List<Tabletype> inputTables) {
+	public SQLScriptSet generateScripts(Collection<Tabletype> inputTables) {
+		return generateScripts(inputTables, true);
+	}
+	public SQLScriptSet generateScripts(Collection<Tabletype> inputTables, boolean generateSequences) {
 		SQLScriptSet scripts = new SQLScriptSet();
 		Collection<Tabletype> generatedTables = 
 				Stream.of(new HistoryTableMapper())
 				.flatMap(mapper -> inputTables.stream().flatMap(table -> mapper.map(table).stream()))
 				.collect(Collectors.toList());
 
-		Stream.of(new TimeStampColumnsTableMutator(), 
-				new VersionColumnTableMutator(),
+		Stream.of(
+				//new TimeStampColumnsTableMutator(),
+				//new VersionColumnTableMutator(),
 				new TenantColumnsTableMutator())
 				.forEach(mutator -> generatedTables.forEach(table -> mutator.mutate(table)));
 		generatedTables.forEach(tableType -> {
 			scripts.addDropStatements(sqlGen.generateDropTables(tableType));
 			scripts.addAllTables(sqlGen.generateCreateTable(tableType));
 			scripts.addAllView(sqlGen.generateCreateView(tableType));
-			scripts.addData(sqlGen.generateSeqInitSQL(tableType));
+			if(generateSequences) {
+				scripts.addData(sqlGen.generateSeqInitSQL(tableType));
+			}
 		});
 		return scripts;
 	}

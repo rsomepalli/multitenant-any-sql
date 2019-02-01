@@ -97,6 +97,15 @@ public class SQLScriptSet {
 		this.data.get(STMTTYPE.DROP).addAll(stmts);
 	}
 	
+	public List<String> getDDL(){
+		List<String> ddl = new ArrayList<>();
+		ddl.addAll(this.data.get(STMTTYPE.DROP));
+		ddl.addAll(this.data.get(STMTTYPE.TABLE));
+		ddl.addAll(this.data.get(STMTTYPE.TRIGGERS));
+		ddl.addAll(this.data.get(STMTTYPE.INDEXES));
+		ddl.addAll(this.data.get(STMTTYPE.VIEWS));
+		return ddl;
+	}
 	public void print(PrintStream writer){
 		data.keySet().forEach(key -> this.data.get(key).forEach(stmt ->writer.println(stmt+";")));
 	}

@@ -1,9 +1,5 @@
 delimiter //
-CREATE TABLE `seq` (
-  `name` varchar(100) NOT NULL,
-  `val` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1
+CREATE TABLE `seq` (`name` varchar(100) NOT NULL,`val` int(10) unsigned NOT NULL, PRIMARY KEY  (`name`)) ENGINE=MyISAM DEFAULT CHARSET=latin1
 
 //
 create function seq(seq_name char (100), count int) returns int

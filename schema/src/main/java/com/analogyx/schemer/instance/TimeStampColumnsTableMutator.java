@@ -22,7 +22,7 @@ public class TimeStampColumnsTableMutator implements TableMutator {
 		column.setType("timestamp");
 		column.setNullable(false);
 		column.setIncludeInView(false);
-		column.setDefault("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
+		column.setDefault("CURRENT_TIMESTAMP");
 		column.setDefaultExpression(true);
 		tableDef.getColumn().add(column);
 	}
