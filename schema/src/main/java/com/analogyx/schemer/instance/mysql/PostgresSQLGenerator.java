@@ -24,8 +24,10 @@ public class PostgresSQLGenerator implements SQLGenerator {
 		sqlStatements.add(createSQL.toString());
 		if (tabletype.isTenantScoped()) {
 			sqlStatements.add(generateTenantColumnTrigger(tabletype));
+			// FORCE does not have any effect without ENABLE first
+			sqlStatements.add(String.format("ALTER TABLE %s ENABLE ROW LEVEL SECURITY ", tableName));
 			sqlStatements.add(String.format("ALTER TABLE %s FORCE ROW LEVEL SECURITY ", tableName));
-			sqlStatements.add(String.format("CREATE POLICY %s_select_policy ON %s FOR SELECT USING (tenant=getTenant())", tableName, tableName));
+			sqlStatements.add(String.format("CREATE POLICY %s_select_policy ON %s FOR SELECT USING (tenant=getTenant() or getTenant()=-1)", tableName, tableName));
 			sqlStatements.add(String.format("CREATE POLICY %s_mod_policy ON %s USING (tenant=getTenant())", tableName, tableName));
 
 		}

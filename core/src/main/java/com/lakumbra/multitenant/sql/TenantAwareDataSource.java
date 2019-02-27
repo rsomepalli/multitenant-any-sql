@@ -16,14 +16,14 @@ import javax.sql.DataSource;
  */
 public abstract class TenantAwareDataSource  implements DataSource{
 
-	
+
 	private Map<String, DataSource> dbInstances = new HashMap<>();
 	private TenantContext tenantContext;
 	protected TenantSessionCallback tenantSessionCallback;
 	private TenantDBInstanceKeyProvider tenantDBInstanceProvider;
-	
 
-	
+
+
 	public DataSource getDbInstance(String instanceId) {
 		return dbInstances.get(instanceId);
 	}
@@ -31,7 +31,7 @@ public abstract class TenantAwareDataSource  implements DataSource{
 	public void setDbInstances(Map<String, DataSource> dbInstances) {
 		this.dbInstances.putAll(dbInstances);
 	}
-	
+
 	public void addDbInstance(String name , DataSource dataSource) {
 		this.dbInstances.put(name, dataSource);
 	}
@@ -111,28 +111,38 @@ public abstract class TenantAwareDataSource  implements DataSource{
 	}
 
 
-	@Override
-	public Connection getConnection() throws SQLException {
-		int tenantId = this.tenantContext.getTenantId();
+	private Integer getTenantId(){
+		Integer tenantId = null;
+		try{
+			tenantId = this.tenantContext.getTenantId();
+		}catch(Exception e){
+			// TODO: ignore only if property tenantRequired=false
+		}
+		return tenantId;
+	}
+	private DataSource getDataSource(Integer tenantId){
 		String dbInstanceKey = this.tenantDBInstanceProvider.getDBInstanceKey(tenantId);
 		DataSource ds = this.dbInstances.get(dbInstanceKey);
 		System.out.println("returning connection for dbInstanceKey=" + dbInstanceKey + "  tenantId=" + tenantId);
+		return ds;
+	}
+	@Override
+	public Connection getConnection() throws SQLException {
+		Integer tenantId = getTenantId();
+		DataSource ds = getDataSource(tenantId);
+
 		Connection connection = ds.getConnection();
 		this.tenantSessionCallback.startTenantSession(tenantId, connection);
 		return connection;
-		
+
 	}
-	
+
 	@Override
 	public Connection getConnection(String username, String password) throws SQLException {
-		int tenantId = this.tenantContext.getTenantId();
-		String dbInstanceKey = this.tenantDBInstanceProvider.getDBInstanceKey(tenantId);
-		DataSource ds = this.dbInstances.get(dbInstanceKey);
+		Integer tenantId = getTenantId();
+		DataSource ds = getDataSource(tenantId);
 		Connection connection = ds.getConnection(username, password);
 		this.tenantSessionCallback.startTenantSession(tenantId, connection);
 		return connection;
-
 	}
-
-	
 }

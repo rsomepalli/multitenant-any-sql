@@ -9,7 +9,7 @@ public class MysqlSimpleTenantAwareDataSource extends MysqlTenantAwareDataSource
 	}
 
 	private static final String DEFAULT="default";
-	
+
 	public void setDataSource(DataSource ds){
 		this.addDbInstance(DEFAULT, ds);
 	}

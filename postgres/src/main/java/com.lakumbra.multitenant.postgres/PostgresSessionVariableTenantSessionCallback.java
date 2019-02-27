@@ -8,9 +8,11 @@ import com.lakumbra.multitenant.sql.TenantSessionCallback;
 public class PostgresSessionVariableTenantSessionCallback implements TenantSessionCallback{
 
 	@Override
-	public void startTenantSession(int tenantId, Connection conn) throws SQLException{
-		conn.createStatement().execute("set my.tenant_id="+tenantId);
+	public void startTenantSession(Integer tenantId, Connection conn) throws SQLException{
+		if(tenantId !=null){
+			conn.createStatement().execute("set my.tenant_id="+tenantId);
+		}
 	}
 
-	
+
 }

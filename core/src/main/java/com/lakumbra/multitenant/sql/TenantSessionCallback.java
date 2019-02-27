@@ -4,5 +4,5 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface TenantSessionCallback {
-	void startTenantSession(int tenantId, Connection conn) throws SQLException;
+	void startTenantSession(Integer tenantId, Connection conn) throws SQLException;
 }
