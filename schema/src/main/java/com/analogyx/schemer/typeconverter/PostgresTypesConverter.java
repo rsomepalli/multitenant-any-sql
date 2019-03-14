@@ -20,6 +20,8 @@ public class PostgresTypesConverter extends GenericTypesConverter {
             return "boolean";
         else if (columnType.getType().equals("json"))
             return "JSON";
+        else if (columnType.getType().equals("geopoint"))
+                return "point";
         else
             return super.schemaTypeToNative(columnType);
     }
@@ -39,7 +41,7 @@ public class PostgresTypesConverter extends GenericTypesConverter {
             columntype.setType("int");
         return columntype;
     }
-    
+
     @Override
     public String schemaDataToNative(Columntype columnType, String data) {
         if( "timestamp".equals(columnType.getType()) ) {

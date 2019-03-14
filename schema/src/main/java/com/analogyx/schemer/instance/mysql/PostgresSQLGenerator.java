@@ -56,7 +56,7 @@ public class PostgresSQLGenerator implements SQLGenerator {
 
 	private String generateTable(Tabletype tabletype) {
 		HashMap<String, Columntype> columnNameToColumnType = new HashMap<>();
-		
+
 		StringBuffer createSQL = new StringBuffer("CREATE TABLE " + getTableName(tabletype) + " (");
 		System.out.println(createSQL.toString());
 		int i = 0;
@@ -99,7 +99,7 @@ public class PostgresSQLGenerator implements SQLGenerator {
 				+ getTableName(tabletype) + " FOR EACH ROW execute procedure update_timestamp_column() ";
 		return triggerSQL;
 	}
-	
+
 	public List<String> generateCreateView(Tabletype tabletype) {
 		List<String> views = new ArrayList<>();
 		if(tabletype.isGenerateView()){
@@ -126,12 +126,13 @@ public class PostgresSQLGenerator implements SQLGenerator {
 					viewSQL.append(" " + tableNamePrefix  +  ct.getName() );
 				}
 			}
-			viewSQL.append(" from " + getTableName(tabletype) + (tabletype.isTenantScoped()? " where (" + tableNamePrefix + "tenant = gettenant())":""));
+			viewSQL.append(" from " + getTableName(tabletype));
+			// + (tabletype.isTenantScoped()? " where (" + tableNamePrefix + "tenant = gettenant())":""));
 
 			views.add(viewSQL.toString());
 		}
 		return views;
-		
+
 	}
 
 	protected String generateDropIndexPK(String tableName, Indextype indexType) {
@@ -199,7 +200,7 @@ public class PostgresSQLGenerator implements SQLGenerator {
 			return false;
 		}
 	}
-	
+
 	private String getTableName(Tabletype tabletype){
 		String prefix = "";
 		if(tabletype.isGenerateView()){
@@ -207,7 +208,7 @@ public class PostgresSQLGenerator implements SQLGenerator {
 		}
 		return prefix + tabletype.getName();
 	}
-	
+
 	public List<String> generateDropTables(Tabletype tabletype){
 		List<String> dropStmts = new ArrayList<>();
 		if(tabletype.isGenerateView()){
