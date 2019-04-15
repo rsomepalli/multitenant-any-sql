@@ -19,7 +19,7 @@
 		<column name="product_type" nullable="false" type="int"></column>
 		<column name="name" nullable="false" scale="100" type="string" />
 		<column name="description" nullable="true" scale="1000" type="string" />
-		<column name="parent_sku" nullable="true" scale="256" type="string" />
+		<column name="parent_sku" nullable="true" scale="256" type="string" is_array="true"/>
 		<column name="image_url" nullable="true" scale="256" type="string" />
 		<column name="has_variants" nullable="true" scale="256" type="string" />
 		<column name="category1" nullable="true" scale="100" type="string" />

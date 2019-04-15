@@ -36,6 +36,7 @@
 		<xs:attribute name="type" type="xs:string" use="required" />
 		<xs:attribute name="scale" type="xs:int" use="optional" default="1"/>
 		<xs:attribute name="nullable" type="xs:boolean" default="false" />
+		<xs:attribute name="is_array" type="xs:boolean" default="false" />
 		<xs:attribute name="default" type="xs:anySimpleType" use="optional" />
 		<xs:attribute name="defaultExpression" type="xs:boolean" use="optional" default="false" />
         <xs:attribute name="minValue" type="xs:string" use="optional" />

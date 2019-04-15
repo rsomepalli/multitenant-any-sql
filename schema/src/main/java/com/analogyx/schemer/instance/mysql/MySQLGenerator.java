@@ -65,6 +65,9 @@ public class MySQLGenerator implements SQLGenerator {
 			createSQL.append(" `" + ct.getName() + "`");
 			createSQL.append(" " + convertor.schemaTypeToNative(ct));
 			createSQL.append(convertor.schemaScaleToNative(ct));
+			if(ct.isIsArray()) {
+				createSQL.append("[]");
+			}
 			if (ct.getDefault() != null && ct.getDefault().length() > 0){
 				createSQL.append(" DEFAULT " + convertor.schemaDefaultToNative(ct));
 			}

@@ -123,14 +123,12 @@ public abstract class TenantAwareDataSource  implements DataSource{
 	private DataSource getDataSource(Integer tenantId){
 		String dbInstanceKey = this.tenantDBInstanceProvider.getDBInstanceKey(tenantId);
 		DataSource ds = this.dbInstances.get(dbInstanceKey);
-		System.out.println("returning connection for dbInstanceKey=" + dbInstanceKey + "  tenantId=" + tenantId);
-		return ds;
+				return ds;
 	}
 	@Override
 	public Connection getConnection() throws SQLException {
 		Integer tenantId = getTenantId();
 		DataSource ds = getDataSource(tenantId);
-
 		Connection connection = ds.getConnection();
 		this.tenantSessionCallback.startTenantSession(tenantId, connection);
 		return connection;
