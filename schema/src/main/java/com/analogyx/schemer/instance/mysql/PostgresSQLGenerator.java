@@ -25,12 +25,12 @@ public class PostgresSQLGenerator implements SQLGenerator {
 		if (tabletype.isTenantScoped()) {
 			sqlStatements.add(generateTenantColumnTrigger(tabletype));
 			// FORCE does not have any effect without ENABLE first
-			sqlStatements.add(String.format("ALTER TABLE %s ENABLE ROW LEVEL SECURITY ", tableName));
-			sqlStatements.add(String.format("ALTER TABLE %s FORCE ROW LEVEL SECURITY ", tableName));
-			sqlStatements.add(String.format("CREATE POLICY %s_select_policy ON %s FOR SELECT USING (getTenant()=-1 or tenant=getTenant())", tableName, tableName));
-			sqlStatements.add(String.format("CREATE POLICY %s_mod_policy ON %s for UPDATE USING (tenant=getTenant())", tableName, tableName));
-			sqlStatements.add(String.format("CREATE POLICY %s_del_policy ON %s for DELETE USING (tenant=getTenant())", tableName, tableName));
-			sqlStatements.add(String.format("CREATE POLICY %s_insert_policy ON %s for INSERT WITH CHECK(true)", tableName, tableName));
+			// sqlStatements.add(String.format("ALTER TABLE %s ENABLE ROW LEVEL SECURITY ", tableName));
+			// sqlStatements.add(String.format("ALTER TABLE %s FORCE ROW LEVEL SECURITY ", tableName));
+			// sqlStatements.add(String.format("CREATE POLICY %s_select_policy ON %s FOR SELECT USING (getTenant()=-1 or tenant=getTenant())", tableName, tableName));
+			// sqlStatements.add(String.format("CREATE POLICY %s_mod_policy ON %s for UPDATE USING (tenant=getTenant())", tableName, tableName));
+			// sqlStatements.add(String.format("CREATE POLICY %s_del_policy ON %s for DELETE USING (tenant=getTenant())", tableName, tableName));
+			// sqlStatements.add(String.format("CREATE POLICY %s_insert_policy ON %s for INSERT WITH CHECK(true)", tableName, tableName));
 
 		}
 		sqlStatements.add(generateSetTimeStampColumnTrigger(tabletype));

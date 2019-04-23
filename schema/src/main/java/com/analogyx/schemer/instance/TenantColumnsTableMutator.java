@@ -1,5 +1,6 @@
 package com.analogyx.schemer.instance;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.analogyx.schemer.TableMutator;
@@ -19,9 +20,28 @@ public class TenantColumnsTableMutator implements TableMutator {
 
 	private void addTenantIndex(Tabletype tableDef) {
 		List<Indextype> indexes = tableDef.getIndex();
+		List<Indextype> tenantScoped = new ArrayList<>();
+
 		for (Indextype index : indexes) {
-			index.getOn().add(0, "tenant");
+			if(!index.isPrimary()) {
+				Indextype tIndex = new Indextype();
+				tIndex.getOn().add(0, "tenant");
+				tIndex.getOn().addAll(index.getOn());
+				tIndex.setIndexname("t_" + index.getIndexname());
+				tIndex.setPrimary(false);
+				tIndex.setUnique(false);
+				tenantScoped.add(tIndex);
+			}
 		}
+
+		Indextype tenantColIndex = new Indextype();
+		tenantColIndex.getOn().add(0, "tenant");
+		tenantColIndex.setIndexname("tenant_" + tableDef.getName().toLowerCase());
+		tenantColIndex.setPrimary(false);
+		tenantColIndex.setUnique(false);
+		tenantScoped.add(tenantColIndex);
+
+		indexes.addAll(tenantScoped);
 	}
 
 	private void addTenantColumn(Tabletype tableDef) {
